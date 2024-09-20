@@ -1,50 +1,63 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🎟️ Gerador de Rifa
 
-Currently, two official plugins are available:
+Este é um projeto de Gerador de Rifas, desenvolvido com carinho a pedido do meu afilhado. A aplicação permite gerar cartelas de rifas personalizadas em PDF, prontas para impressão, com campos para controle de venda, prêmios, e detalhes do sorteio.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **React**: Biblioteca JavaScript para criar interfaces de usuário.
+- **Vite**: Ferramenta de build rápida para desenvolvimento frontend.
+- **Tailwind CSS**: Framework de CSS utilitário para estilização rápida e responsiva.
+- **TypeScript**: Superset de JavaScript que adiciona tipagem estática ao código.
+- **Zod**: Biblioteca para validação de esquemas de dados, garantindo a integridade dos formulários.
+- **React Hook Form**: Biblioteca para gerenciamento de formulários em React, com foco em performance e experiência do usuário.
+- **jsPDF**: Biblioteca JavaScript para gerar PDFs diretamente no navegador.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🚀 Funcionalidades
 
-- Configure the top-level `parserOptions` property like this:
+- **Gerar Cartelas de Rifa**: Crie rifas personalizadas com informações de sorteio, descrição, prêmios, e valor.
+- **Layout Personalizado**: Cada cartela inclui campos de controle para o vendedor e informações detalhadas para o comprador.
+- **Exportação para PDF**: Imprima as cartelas em PDF, com layout ajustado para conter várias rifas por página.
+- **Validação com Zod**: Garantia de que todos os campos obrigatórios sejam preenchidos corretamente.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📝 Como Usar
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/gerador-de-rifa.git
+   ```
+   
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+3. Inicie o projeto:
+   ```bash
+   npm run dev
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+4. Acesse a aplicação no navegador em [http://localhost:5173](http://localhost:5173).
+
+## 📸 Capturas de Tela
+
+Adicionar capturas de tela 
+
+## 📦 Estrutura do Projeto
+
+- **src/**: Contém o código-fonte da aplicação.
+- **components/**: Componentes reutilizáveis da interface.
+- **hooks/**: Hooks customizados para lógica específica do projeto.
+- **styles/**: Estilos globais usando Tailwind CSS.
+
+## 🧑‍💻 Contribuindo
+
+Contribuições são sempre bem-vindas! Se você tiver sugestões ou melhorias, sinta-se à vontade para abrir um issue ou um pull request.
+
+## ❤️ Agradecimentos
+
+Este projeto foi criado especialmente para meu afilhado. Espero que ele curta bastante e que seja útil para muitas outras pessoas que precisam gerar rifas com praticidade.
+
+---
+
+Feito com 💙 e muita dedicação!
