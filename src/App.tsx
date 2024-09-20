@@ -6,15 +6,15 @@ import "jspdf-autotable";
 import { useState } from "react";
 
 const raffleSchema = z.object({
-  raffleName: z.string().min(1, "Nome da rifa é obrigatório"),
-  ticketCount: z.number().min(1, "É necessário gerar pelo menos 1 rifa"),
+  raffleName: z.string().min(1, "Nome da rifa é obrigatório."),
+  ticketCount: z.number({message: 'Inserir um Número maior que zero'}).min(1, "É necessário gerar pelo menos 1 rifa."),
   includeTicketNumber: z.boolean(),
-  description: z.string().min(1, "Descrição é obrigatória"),
-  prize: z.string().min(1, "Insira pelo menos um prêmio"),
-  price: z.number().min(1, "Valor da rifa é obrigatório"),
-  location: z.string().min(1, "Local do sorteio é obrigatório"),
-  drawDate: z.string().min(1, "Data do sorteio é obrigatória"),
-  drawTime: z.string().min(1, "Hora do sorteio é obrigatória"),
+  description: z.string().min(1, "Descrição é obrigatória."),
+  prize: z.string().min(1, "Insira pelo menos um prêmio."),
+  price: z.number().positive("Valor deve ser maior que zero.").min(1, "Valor da rifa é obrigatório."),
+  location: z.string().min(1, "Local do sorteio é obrigatório."),
+  drawDate: z.string().min(1, "Data do sorteio é obrigatória."),
+  drawTime: z.string().min(1, "Hora do sorteio é obrigatória."),
   observations: z.string().optional(),
   prizeImages: z.any().optional(),
 });
@@ -219,92 +219,93 @@ export default function App() {
 
   return (
     <main className="max-w-5xl mx-auto  min-h-screen">
-      <h1 className="text-4xl py-4 text-center font-semibold uppercase">
+      <h1 className="text-4xl px-8 py-4 text-center font-semibold uppercase">
         Gerador de Tickets de Rifa
       </h1>
       <form
         onSubmit={handleSubmit(generatePDF)}
         className="px-8 pt-10 flex flex-col gap-4"
       >
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Nome da Rifa</label>
             <input
               placeholder="Ex.: Rifa dos Amigos da Rua Dois"
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("raffleName")}
             />
-            {errors.raffleName && <p>{errors.raffleName.message}</p>}
+            {errors.raffleName && <p className="text-xs text-red-700">{errors.raffleName.message}</p>}
           </div>
-          <div className="flex flex-col w-60">
+          <div className="flex flex-col flex-1 md:w-60">
             <label className="text-sm  ml-1">Quantidade de Rifas</label>
             <input
               placeholder="Ex.: 150"
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               type="number"
               {...register("ticketCount", { valueAsNumber: true })}
             />
-            {errors.ticketCount && <p>{errors.ticketCount.message}</p>}
+            {errors.ticketCount && <p className="text-xs text-red-700">{errors.ticketCount.message}</p>}
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row  gap-4">
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Breve descrição da rifa</label>
             <input
               placeholder="Ex.: Rifa para arrecadar fundos para publicação do meu livro"
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("description")}
             />
-            {errors.description && <p>{errors.description.message}</p>}
+            {errors.description && <p className="text-xs text-red-700">{errors.description.message}</p>}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Prêmio</label>
             <input
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("prize")}
               placeholder="Ex.: Uma bicicleta preta e branco"
             />
+            {errors.price && <p className="text-xs text-red-700">{errors.prize?.message}</p>}
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Valor da Rifa</label>
             <input
               placeholder="Ex.: 10,00"
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               type="number"
               {...register("price", { valueAsNumber: true })}
             />
-            {errors.price && <p>{errors.price.message}</p>}
+            {errors.price && <p className="text-xs text-red-700">{errors.price.message}</p>}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Local do Sorteio</label>
             <input
               placeholder="Minha casa, via rede social"
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("location")}
             />
-            {errors.location && <p>{errors.location.message}</p>}
+            {errors.location && <p className="text-xs text-red-700">{errors.location.message}</p>}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Data do Sorteio</label>
             <input
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               type="date"
               {...register("drawDate")}
             />
-            {errors.drawDate && <p>{errors.drawDate.message}</p>}
+            {errors.drawDate && <p className="text-xs text-red-700">{errors.drawDate.message}</p>}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Hora do Sorteio</label>
             <input
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               type="time"
               {...register("drawTime")}
             />
-            {errors.drawTime && <p>{errors.drawTime.message}</p>}
+            {errors.drawTime && <p className="text-xs text-red-700">{errors.drawTime.message}</p>}
           </div>
         </div>
 
@@ -313,22 +314,22 @@ export default function App() {
           <input
             type="text"
             placeholder="Ex.: O resultado do sorteio será publicado no aplicativo de mensagem"
-            className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+            className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
             {...register("observations")}
           />
         </div>
 
-        <div className="flex gap-10 items-center">
-          <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col w-full">
             <label className="text-sm  ml-1">Imagem do Prêmio</label>
             <input
-              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
             />
           </div>
-          <div className="w-36 h-36 border border-slate-300 flex items-center justify-center">
+          <div className="w-36 h-36 border border-slate-300 flex items-center justify-center rounded-md">
             {imagePreviews.length <= 0 && (
               <p className="text-center">Sua Imagem aparecerá aqui...</p>
             )}
@@ -340,16 +341,15 @@ export default function App() {
                   alt={`Prêmio ${index + 1}`}
                   width="100"
                   height="100"
-                  className="my-4"
                 />
               ))}
           </div>
         </div>
 
-        <div className="border border-slate-300 flex-1 rounded-md p-4 flex gap-10 items-center justify-center mt-4">
+        <div className="border border-slate-300 flex-1 rounded-md p-4 flex gap-10 items-center justify-center mb-10">
           <div className="flex items-center justify-center">
             <input
-              className="bg-transparent accent-emerald-600 border border-slate-300 outline-none rounded-md px-4 py-2"
+              className="bg-transparent accent-emerald-600 border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               type="checkbox"
               {...register("includeTicketNumber")}
             />
