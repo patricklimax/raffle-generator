@@ -7,11 +7,16 @@ import { useState } from "react";
 
 const raffleSchema = z.object({
   raffleName: z.string().min(1, "Nome da rifa é obrigatório."),
-  ticketCount: z.number({message: 'Inserir um Número maior que zero'}).min(1, "É necessário gerar pelo menos 1 rifa."),
+  ticketCount: z
+    .number({ message: "Inserir um Número maior que zero" })
+    .min(1, "É necessário gerar pelo menos 1 rifa."),
   includeTicketNumber: z.boolean(),
   description: z.string().min(1, "Descrição é obrigatória."),
   prize: z.string().min(1, "Insira pelo menos um prêmio."),
-  price: z.number().positive("Valor deve ser maior que zero.").min(1, "Valor da rifa é obrigatório."),
+  price: z
+    .number()
+    .positive("Valor deve ser maior que zero.")
+    .min(1, "Valor da rifa é obrigatório."),
   location: z.string().min(1, "Local do sorteio é obrigatório."),
   drawDate: z.string().min(1, "Data do sorteio é obrigatória."),
   drawTime: z.string().min(1, "Hora do sorteio é obrigatória."),
@@ -107,6 +112,8 @@ export default function App() {
         );
 
       if (data.includeTicketNumber) {
+        doc.setFillColor(200, 200, 200);
+        doc.rect(30, positionYinitial + 70, 105, 14, "F");
         doc
           .setFontSize(9)
           .text(`Número do Sorteio: ${i + 1}`, 30, positionYinitial + 80);
@@ -115,6 +122,8 @@ export default function App() {
       // Para o comprador
       doc.rect(270, positionYinitial - 10, 310, ticketHeight - 10);
 
+      doc.setFillColor(200, 200, 200); // Cor de fundo (verde)
+      doc.rect(pageWidth - 27, positionYinitial - 9.5, pageWidth + 11, 18, "F");
       doc
         .setFontSize(12)
         .text(`${data.raffleName}`, pageWidth + 130, positionYinitial + 5, {
@@ -124,7 +133,7 @@ export default function App() {
       if (data.includeTicketNumber) {
         doc
           .setFontSize(12)
-          .text(`Nº ${i + 1}`, pageWidth + 240, positionYinitial + 10);
+          .text(`Nº ${i + 1}`, pageWidth + 240, positionYinitial + 4);
       }
 
       doc
@@ -234,7 +243,11 @@ export default function App() {
               className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("raffleName")}
             />
-            {errors.raffleName && <p className="text-xs text-red-700">{errors.raffleName.message}</p>}
+            {errors.raffleName && (
+              <p className="text-xs text-red-700">
+                {errors.raffleName.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col flex-1 md:w-60">
             <label className="text-sm  ml-1">Quantidade de Rifas</label>
@@ -244,7 +257,11 @@ export default function App() {
               type="number"
               {...register("ticketCount", { valueAsNumber: true })}
             />
-            {errors.ticketCount && <p className="text-xs text-red-700">{errors.ticketCount.message}</p>}
+            {errors.ticketCount && (
+              <p className="text-xs text-red-700">
+                {errors.ticketCount.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -256,7 +273,11 @@ export default function App() {
               className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("description")}
             />
-            {errors.description && <p className="text-xs text-red-700">{errors.description.message}</p>}
+            {errors.description && (
+              <p className="text-xs text-red-700">
+                {errors.description.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Prêmio</label>
@@ -265,7 +286,9 @@ export default function App() {
               {...register("prize")}
               placeholder="Ex.: Uma bicicleta preta e branco"
             />
-            {errors.price && <p className="text-xs text-red-700">{errors.prize?.message}</p>}
+            {errors.price && (
+              <p className="text-xs text-red-700">{errors.prize?.message}</p>
+            )}
           </div>
         </div>
 
@@ -278,7 +301,9 @@ export default function App() {
               type="number"
               {...register("price", { valueAsNumber: true })}
             />
-            {errors.price && <p className="text-xs text-red-700">{errors.price.message}</p>}
+            {errors.price && (
+              <p className="text-xs text-red-700">{errors.price.message}</p>
+            )}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Local do Sorteio</label>
@@ -287,7 +312,9 @@ export default function App() {
               className="bg-transparent border border-slate-300 outline-none rounded-md px-4 py-2 placeholder:text-xs md:placeholder:text-base"
               {...register("location")}
             />
-            {errors.location && <p className="text-xs text-red-700">{errors.location.message}</p>}
+            {errors.location && (
+              <p className="text-xs text-red-700">{errors.location.message}</p>
+            )}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Data do Sorteio</label>
@@ -296,7 +323,9 @@ export default function App() {
               type="date"
               {...register("drawDate")}
             />
-            {errors.drawDate && <p className="text-xs text-red-700">{errors.drawDate.message}</p>}
+            {errors.drawDate && (
+              <p className="text-xs text-red-700">{errors.drawDate.message}</p>
+            )}
           </div>
           <div className="flex flex-col flex-1">
             <label className="text-sm  ml-1">Hora do Sorteio</label>
@@ -305,7 +334,9 @@ export default function App() {
               type="time"
               {...register("drawTime")}
             />
-            {errors.drawTime && <p className="text-xs text-red-700">{errors.drawTime.message}</p>}
+            {errors.drawTime && (
+              <p className="text-xs text-red-700">{errors.drawTime.message}</p>
+            )}
           </div>
         </div>
 
